@@ -1,0 +1,14 @@
+"""Browser entry point for Clinical Trial Finder."""
+from flask import Flask
+
+app = Flask(__name__)
+
+
+@app.get("/")
+def home():
+    return (
+        '<!doctype html><html lang="en"><head><meta charset="utf-8">'
+        '<meta name="viewport" content="width=device-width, initial-scale=1">'
+        '<title>Clinical Trial Finder</title></head>'
+        '<body><main><h1>Clinical Trial Finder</h1></main></body></html>'
+    )
