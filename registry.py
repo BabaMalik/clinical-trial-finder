@@ -1,5 +1,6 @@
 """HTTP client for the public ClinicalTrials.gov registry."""
 
+import json
 from urllib.parse import urlencode
 from urllib.request import Request, urlopen
 
@@ -13,3 +14,10 @@ def fetch_studies():
     with urlopen(request, timeout=15) as response:
         return response.read()
 
+
+def fetch_study_page():
+    """Return the decoded first page, including any pagination token."""
+    page = json.loads(fetch_studies())
+    if not isinstance(page, dict) or not isinstance(page.get("studies"), list):
+        raise ValueError("Expected a ClinicalTrials.gov response with a studies list.")
+    return page
