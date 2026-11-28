@@ -49,6 +49,8 @@
                 {% endfor %}
             </ul>
         </section>
+        {% elif trials is not none %}
+        <p role="status">No trials matched your condition.</p>
         {% endif %}
     </main>
 </body>
