@@ -24,3 +24,19 @@ def fetch_study_page(condition=None):
     if not isinstance(page, dict) or not isinstance(page.get("studies"), list):
         raise ValueError("Expected a ClinicalTrials.gov response with a studies list.")
     return page
+
+
+def search_by_condition(condition):
+    """Return display fields for the first page of matching studies."""
+    trials = []
+    for study in fetch_study_page(condition)["studies"]:
+        protocol = study["protocolSection"]
+        identity = protocol["identificationModule"]
+        nct_id = identity["nctId"]
+        trials.append({
+            "id": nct_id,
+            "title": identity["briefTitle"],
+            "status": protocol["statusModule"]["overallStatus"],
+            "url": f"https://clinicaltrials.gov/study/{nct_id}",
+        })
+    return trials
